@@ -26,11 +26,23 @@ var collectionname = 'events';
  * every route in this service starts with /events
  */
 router.get('/', function(req, res) {
+    var startDate = req.query.startdate;
+    var endDate = req.query.enddate;
     // db.collection(collectionname, function(err, collection) {
-    //     collection.find().toArray(function(err, items) {
+    //     var result;
+    //     if (startDate && endDate) {
+    //         result = collection.find({
+    //             'from': {$gte: ISODate(startDate)},
+    //             'to': {$lte: ISODate(endDate)}
+    //         });
+    //     } else {
+    //         result = collection.find();            
+    //     }
+    //     result.toArray(function(err, items) {
     //         res.send(items);
     //     });
     // });
+    
     console.log('requested all events');
     res.send(
         [
