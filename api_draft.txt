@@ -1,0 +1,62 @@
+nodejs 		<unserserver>.hsr.ch/api
+
+	GET	/events 					gibt alle Termine zurück
+	GET	/events?from=<startDate>&to=<endDate>		gibt alle Termine zwischen start- und endDate zurück
+
+		[{
+			id: '1',
+			from: 'Thu Oct 29 2015 06:00:00 GMT+0100',
+			to: 'Thu Oct 29 2015 12:00:00 GMT+0100',
+			user_id: '100'
+		 },
+		 {
+			id: '2',
+			from: 'Thu Oct 29 2015 12:00:00 GMT+0100',
+			to: 'Thu Oct 29 2015 22:00:00 GMT+0100',
+			user_id: '101'
+		 }, 
+		 ....
+		]
+
+
+	POST	/events						Erstellt neuen Event-Eintrag
+		Format: siehe GET /events
+
+	DELETE	/events/:id					Löscht event mit id :id (Termin freigeben)
+
+
+	GET 	/users						Liefert eine Liste von User zurück
+		
+		[{
+			id: '1'
+			firstname: 'Jim',
+			lastname: 'Knopf',
+			twitter_id: '1234567'
+		 },
+		 ....
+		]
+
+	GET 	/users/:id					Liefert User mit id :id zurück
+		Format: siehe GET /users
+
+	POST 	/users						Erstellt neuen User
+		Format: siehe GET /users
+
+________________________________________________________________________________________________________________
+
+socket.io 	<unserserver>.hsr.ch/websocket
+	on_connect
+		Liefern von Waschmaschinenstatus
+	
+	on_data
+		Zwischenspeichern Waschmaschinenstatus
+		Alle Sockets benachrichtigen
+
+________________________________________________________________________________________________________________
+
+
+index.html	<client>
+	GET /event?from=<Wochenstart>&to=<Wochenende>
+	-> Visualisieren und Mieter der Wäsche hat anzeigen
+
+	Websocket erstellen; Maschinenstatus anzeigen
