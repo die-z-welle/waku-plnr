@@ -1,0 +1,15 @@
+{
+  "name": "waku-simulator",
+  "version": "1.0.0",
+  "description": "Simulation of Washingmachines changing their states between idle and wash and publish these informations to a mqtt queue",
+  "main": "waku-simulator.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mqtt": "^1.8.0",
+    "webworker-threads": "^0.7.2"
+  }
+}

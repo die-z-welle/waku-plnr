@@ -1,0 +1,7 @@
+{
+   "brokerURI" : "mqtt://localhost",
+   "numberOfWashingmachines" : 3,
+   "topic" : "waku",
+   "washingTimeInHours" : 1,
+   "simulationSpeed" : 2000
+}

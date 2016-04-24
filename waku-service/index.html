@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+   <head>
+      <title>Waku Planer</title>
+   </head>
+   <body>
+      <ul id="waku"></ul>
+      
+      <script src="/socket.io/socket.io.js"></script>
+      <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+      <script>
+         var socket = io();
+         socket.on('devices', function(msg) {
+            var json = JSON.parse(msg);
+            console.log('new device: ' + json.toString());
+            $('#waku').append($('<li>')
+               .attr('id', json.id)
+               .text('id: ' + json.id + ', state: ' + json.state));
+         });
+
+         socket.on('notifications', function(msg) {
+            var json = JSON.parse(msg);
+            console.log('notification: ' + json.id);
+            $('#' + json.id).text('id: ' + json.id + ', state: ' + json.state);
+         });
+      </script>
+   </body>
+</html>

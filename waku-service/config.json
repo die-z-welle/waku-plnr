@@ -1,0 +1,5 @@
+{
+   "brokerURI" : "mqtt://localhost",
+   "topic" : "waku",
+   "port" : "3000"
+}
