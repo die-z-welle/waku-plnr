@@ -1,5 +1,7 @@
 var config  = require('./config.json');
 var db      = require('./db.js');
+var users   = require('./user-controller.js');
+var events  = require('./event-controller.js');
 var app     = require('express')();
 var http    = require('http').Server(app);
 var io      = require('socket.io')(http);
@@ -23,6 +25,8 @@ client.on('message', function(topic, message) {
 app.get('/', function(req, res) {
    res.sendFile(__dirname + '/index.html');
 });
+app.use('/users', users);
+app.use('/events', events);
 
 io.on('connection', function(socket) {
    console.log('[ INFO ] Client connected');
