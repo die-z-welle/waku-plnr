@@ -96,5 +96,15 @@ router.post('/', function(req, res) {
     // });
 });
 
+router.post('/:id', function() {
+    var id = req.params.id;
+    console.log('delete event ' + id);
+    // db.collection(collectionname, function(err, collection) {
+    //     collection.deleteOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
+    //         res.send(item);
+    //     });
+    // });
+});
+
 
 module.exports = router;
