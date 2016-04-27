@@ -2,43 +2,60 @@
 <html>
     <head>
         <title>Waku Planer</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
         <link rel="stylesheet" href="/libs/bootstrap-clockpicker.css">
     </head>
    <body ng-app="wakuplnr">
         <div class="container" ng-controller="MainCtrl">
-            <div class="row">
-                <div class="col-xs-4">
-                    Datum: <br />
-                    <waku-date value="day"></waku-date>
+            <form novalidate name="eventForm" ng-submit="saveEvent()"> 
+                <div style="margin-top: 50px;" class="row">
+                    <div class="col-xs-4">
+                        <div class="form-group" ng-class="{ 'has-error' : eventForm.user.$invalid && eventForm.$submitted }">
+                            <label>Mieter</label>
+                            <select name="user" class="form-control" ng-model="userid" ng-required="true">
+                                <option></option>
+                                <option ng-repeat="user in users" value="{{user.id}}">{{user.firstname + ' ' + user.lastname}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-offset-xs-2 col-xs-4">
+                        <div class="form-group" ng-class="{ 'has-error' : eventForm.day.$invalid && eventForm.$submitted }">
+                            <label>Datum</label>
+                            <waku-date name="'day'" value="day" required="true"></waku-date>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-xs-4">
-                    von:<br />
-                    <waku-time value="startTime"></waku-time>
+                <br />
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="form-group" ng-class="{ 'has-error' : eventForm.from.$invalid && eventForm.$submitted }">
+                            <label>von</label>
+                            <waku-time name="'from'" value="startTime" required="true"></waku-time>
+                        </div>
+                    </div>
+                    <div class="col-offset-xs-2 col-xs-4">
+                        <div class="form-group" ng-class="{ 'has-error' : eventForm.to.$invalid && eventForm.$submitted }">
+                            <label>bis</label>
+                            <waku-time name="'to'" value="endTime" required="true"></waku-time>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-offset-xs-2 col-xs-4">
-                    bis:<br />
-                    <waku-time value="endTime"></waku-time>
+                <br />
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="button" class="btn btn-default" ng-click="logme()">Log Date</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
                 </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-xs-12">
-                    <button type="button" class="btn btn-default" ng-click="logme()">Log Date</button>
-                    <button type="button" class="btn btn-primary" ng-click="saveEvent()">Save</button>
-                </div>
-            </div>
+            </form>
         </div>
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-resource.min.js"></script>
         <script src="/wakuplnr-app.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
         <script src="/libs/bootstrap-clockpicker.js"></script>
    </body>
 </html>

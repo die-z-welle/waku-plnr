@@ -1,5 +1,5 @@
 <div class="input-group clockpicker">
-    <input ng-model="value" type="text" ng-click="openClockPicker($event)" class="form-control" ng-change="valueChanged()">
+    <input name="{{name}}" ng-model="value" type="text" ng-click="openClockPicker($event)" class="form-control" ng-change="valueChanged()" ng-required="{{required}}">
     <span class="input-group-addon">
         <span class="glyphicon glyphicon-time"></span>
     </span>

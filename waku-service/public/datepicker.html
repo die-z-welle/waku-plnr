@@ -1,5 +1,5 @@
 <div class="input-group date">
-    <input type="text" class="form-control" ng-click="openDatepicker()" ng-model="value" ng-change="valueChanged()">
+    <input name="{{name}}" type="text" class="form-control" ng-click="openDatepicker()" ng-required="{{required}}" ng-model="value" ng-change="valueChanged()">
     <span class="input-group-addon">
         <span class="glyphicon glyphicon-calendar"></span>
     </span>
