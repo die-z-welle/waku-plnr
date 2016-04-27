@@ -96,5 +96,32 @@ angular.module('wakuplnr', ['ngResource'])
       };
     }
   };
+})
+.directive('wakuTime', function($timeout){
+  return {
+    restrict: 'E',
+    templateUrl: 'timepicker.html',
+    scope: {
+      eventHandler: '&eventHandler',
+      value: '='
+    },
 
+    link: function(scope, element, attrs){
+
+      scope.openClockPicker = function($event){
+        $event.stopPropagation();
+        element.find('.clockpicker').clockpicker('show');
+      };
+
+      scope.valueChanged = function () {
+        $timeout(function() {
+          scope.eventHandler();
+        }, 1);
+      };
+
+      element.find('.clockpicker').clockpicker({
+        autoclose: true
+      });
+    }
+  };
 });
