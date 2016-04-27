@@ -49,7 +49,7 @@ router.get('/', function(req, res) {
             'to': {$lte: ISODate(endDate)}
         });
     } else {
-        result = collection.find();            
+        result = collection.find();
     }
     result.toArray(function(err, items) {
         res.send(items);
@@ -68,7 +68,7 @@ router.post('/', function(req, res) {
     var event = req.body;
     console.log('posted event ' + JSON.stringify(event));
     event._id = null;
-    collection.insert(event, {safe:true}, function(err, result) {
+    collection.insertOne(event, {safe:true}, function(err, result) {
         if (err) {
             res.send({'error':'An error has occurred'});
         } else {
