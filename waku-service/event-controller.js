@@ -89,7 +89,7 @@ router.post('/', function(req, res) {
     });
 });
 
-router.post('/:id', function() {
+router.delete('/:id', function(req, res) {
     var id = req.params.id;
     console.log('delete event ' + id);
     db.collection(collectionname, function(err, collection) {
