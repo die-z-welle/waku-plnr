@@ -6,6 +6,7 @@ Prerequisites:
 
     lua
     nodejs
+    mongodb
 
 
 ### Cloud
