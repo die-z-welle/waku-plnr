@@ -3,54 +3,33 @@
    <head>
       <title>Waku Planer</title>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css" crossorigin="anonymous">
    </head>
    <body ng-app="wakuplnr">
-      <ul id="waku"></ul>
-      <div class="container" ng-controller="MainCtrl">
-          <table class="table table-striped">
-              <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Vorname</th>
-                    <th>Nachname</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="user in users">
-                    <td>{{user.id}}</td>
-                    <td>{{user.firstname}}</td>
-                    <td>{{user.lastname}}</td>
-                </tr>
-              </tbody>
-          </table>
-
-          <div class="row" ng-repeat="event in events">
-              {{event}}
-          </div>
-      </div>
-      
-      <script src="/socket.io/socket.io.js"></script>
-      <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-      <script>
-         var socket = io();
-         socket.on('devices', function(msg) {
-            var json = JSON.parse(msg);
-            console.log('new device: ' + json.toString());
-            $('#waku').append($('<li>')
-               .attr('id', json.id)
-               .text('id: ' + json.id + ', state: ' + json.state));
-         });
-
-         socket.on('notifications', function(msg) {
-            var json = JSON.parse(msg);
-            console.log('notification: ' + json.id);
-            $('#' + json.id).text('id: ' + json.id + ', state: ' + json.state);
-         });
-      </script>
-      
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-resource.min.js"></script>
-      <script src="/wakuplnr-app.js"></script>
+        <div class="container" ng-controller="MainCtrl">
+            <div class="row">
+                <div class="col-xs-4">
+                    Startdatum:<br />
+                    <waku-date value="startDate"></waku-date>
+                </div>
+                <div class="col-offset-xs-2 col-xs-4">
+                    Enddatum:<br />
+                    <waku-date value="endDate"></waku-date>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-xs-12">
+                    <button type="button" class="btn btn-default" ng-click="logme()">Log Date</button>
+                    <button type="button" class="btn btn-primary" ng-click="saveEvent()">Save</button>
+                </div>
+            </div>
+        </div>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-resource.min.js"></script>
+        <script src="/wakuplnr-app.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js" crossorigin="anonymous"></script>
    </body>
 </html>
