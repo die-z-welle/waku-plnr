@@ -5,7 +5,6 @@ var Server = mongo.Server,
     Db = mongo.Db;
 var BSON = require('bson').BSONPure;
 
-
 var server = new Server('localhost', 27017, {auto_reconnect: true});
 var db = new Db('waku-plnr-db', server);
 db.open(function(err, db) {

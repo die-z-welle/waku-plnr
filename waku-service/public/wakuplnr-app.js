@@ -18,12 +18,24 @@ angular.module('wakuplnr', ['ngResource'])
         var start = new Date(dayParts[2], dayParts[1] - 1, dayParts[0], startTimeParts[1], startTimeParts[0]);
         var end = new Date(dayParts[2], dayParts[1] - 1, dayParts[0], endTimeParts[1], endTimeParts[0]);
         var event = {from: start, to: end, user_id: $scope.userid};
-        EventService.create(event);
+        EventService.create(event).$promise.then(
+            function(success) {
+                $scope.success = true;
+            }, function (error) {
+                $scope.error = error;
+            }
+        );
     };
 })
 .controller('UserCtrl', function($scope, UserService) {
     $scope.save = function() {
-        UserService.create({firstname: $scope.firstname, lastname: $scope.lastname, twitter_id: $scope.twitterId});
+        UserService.create({firstname: $scope.firstname, lastname: $scope.lastname, twitter_id: $scope.twitterId}).$promise.then(
+            function(success) {
+                $scope.success = true;
+            }, function (error) {
+                $scope.error = error;
+            }
+        );
     }
 })
 .service('UserService', function($resource) {

@@ -66,7 +66,6 @@ router.get('/:id', function(req, res) {
 
 router.post('/', function(req, res) {
     var event = req.body;
-    console.log('posted event ' + JSON.stringify(event));
     event._id = null;
     collection.insertOne(event, {safe:true}, function(err, result) {
         if (err) {

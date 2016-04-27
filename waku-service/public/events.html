@@ -8,14 +8,14 @@
     </head>
    <body ng-app="wakuplnr">
         <div class="container" ng-controller="EventCtrl">
-            <form novalidate name="eventForm" ng-submit="save()"> 
+            <form novalidate name="eventForm" ng-submit="save()" ng-hide="success"> 
                 <div style="margin-top: 50px;" class="row">
                     <div class="col-xs-4">
                         <div class="form-group" ng-class="{ 'has-error' : eventForm.user.$invalid && eventForm.$submitted }">
                             <label>Mieter</label>
                             <select name="user" class="form-control" ng-model="userid" ng-required="true">
                                 <option></option>
-                                <option ng-repeat="user in users" value="{{user.id}}">{{user.firstname + ' ' + user.lastname}}</option>
+                                <option ng-repeat="user in users" value="{{user._id}}">{{user.firstname + ' ' + user.lastname}}</option>
                             </select>
                         </div>
                     </div>
@@ -49,6 +49,16 @@
                     </div>
                 </div>
             </form>
+
+            <div class="alert alert-success" role="alert" ng-show="success">
+                <strong>Termin am {{day}} von {{startTime}} bis {{endTime}} wurde erfolgreich reserviert!</strong>
+                <a href="/">zurück zur Startseite</a>
+            </div>
+            <div class="alert alert-danger" role="alert" ng-show="!success && error">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                {{errorMessage}}
+            </div>
         </div>
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

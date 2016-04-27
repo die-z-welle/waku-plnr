@@ -6,7 +6,7 @@
     </head>
    <body ng-app="wakuplnr">
         <div class="container" ng-controller="UserCtrl">
-            <form novalidate name="userForm" ng-submit="save()"> 
+            <form novalidate name="userForm" ng-submit="save()" ng-hide="success"> 
                 <div style="margin-top: 50px;" class="row">
                     <div class="col-xs-4">
                         <div class="form-group" ng-class="{ 'has-error' : userForm.firstname.$invalid && eventForm.$submitted }">
@@ -37,6 +37,16 @@
                     </div>
                 </div>
             </form>
+            
+            <div class="alert alert-success" role="alert" ng-show="success">
+                <strong>Der Mieter {{firstname + ' ' + lastname}} wurde erfolgreich erstellt!</strong>
+                <a href="/">zurück zur Startseite</a>
+            </div>
+            <div class="alert alert-danger" role="alert" ng-show="!success && error">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                {{errorMessage}}
+            </div>
         </div>
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

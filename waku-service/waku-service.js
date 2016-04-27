@@ -4,6 +4,7 @@ var users   = require('./user-controller.js');
 var events  = require('./event-controller.js');
 var measurements = require('./measurement-controller.js')
 var express = require('express');
+var bodyParser = require('body-parser');
 var app     = express();
 var http    = require('http').Server(app);
 var io      = require('socket.io')(http);
@@ -24,6 +25,7 @@ client.on('message', function(topic, message) {
    io.emit('notifications', JSON.stringify(json));
 });
 
+app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 app.use('/users', users);
 app.use('/events', events);
