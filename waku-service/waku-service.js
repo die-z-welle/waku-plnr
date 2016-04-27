@@ -2,7 +2,8 @@ var config  = require('./config.json');
 var db      = require('./db.js');
 var users   = require('./user-controller.js');
 var events  = require('./event-controller.js');
-var app     = require('express')();
+var express = require('express');
+var app     = express();
 var http    = require('http').Server(app);
 var io      = require('socket.io')(http);
 var mqtt    = require('mqtt');
@@ -22,9 +23,7 @@ client.on('message', function(topic, message) {
    io.emit('notifications', JSON.stringify(json));
 });
 
-app.get('/', function(req, res) {
-   res.sendFile(__dirname + '/index.html');
-});
+app.use(express.static(__dirname + '/public'));
 app.use('/users', users);
 app.use('/events', events);
 
