@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var collectionname = 'events';
+var collectionname = 'measurements';
 
 // TODO move this to db.js
 var mongo = require('mongodb');
