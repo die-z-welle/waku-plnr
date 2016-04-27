@@ -2,6 +2,7 @@ var config  = require('./config.json');
 var db      = require('./db.js');
 var users   = require('./user-controller.js');
 var events  = require('./event-controller.js');
+var measurements = require('./measurement-controller.js')
 var express = require('express');
 var app     = express();
 var http    = require('http').Server(app);
@@ -26,6 +27,7 @@ client.on('message', function(topic, message) {
 app.use(express.static(__dirname + '/public'));
 app.use('/users', users);
 app.use('/events', events);
+app.use('/measurements', measurements);
 
 io.on('connection', function(socket) {
    console.log('[ INFO ] Client connected');
