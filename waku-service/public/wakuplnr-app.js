@@ -16,7 +16,7 @@ angular.module('wakuplnr', ['ngResource'])
         var start = new Date(dayParts[2], dayParts[1] - 1, dayParts[0], startTimeParts[1], startTimeParts[0]);
         var end = new Date(dayParts[2], dayParts[1] - 1, dayParts[0], endTimeParts[1], endTimeParts[0]);
         // TODO generate id
-        var event = {id: '', from: start, to: end, user_id: $scope.userid};
+        var event = {from: start, to: end, user_id: $scope.userid};
         EventService.create(event);
     };
 })

@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bson": "^0.4.23",
     "express": "^4.10.2",
     "mongodb": "^2.1.18",
     "mqtt": "^1.8.0",
