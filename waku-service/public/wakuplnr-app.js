@@ -2,23 +2,29 @@ angular.module('wakuplnr', ['ngResource'])
 .controller('MainCtrl', function($scope, UserService, EventService) {
     $scope.users = UserService.find();
     $scope.events = EventService.find();
+})
+.controller('EventCtrl', function($scope, UserService, EventService) {
+    $scope.users = UserService.find();
     $scope.logme = function() {
         console.log($scope.userid);
         console.log($scope.day);
         console.log($scope.startTime + ' - ' + $scope.endTime);
     };
     
-    $scope.saveEvent = function() {
-        console.log('implement save event');
+    $scope.save = function() {
         var dayParts = $scope.day.split('.');
         var startTimeParts = $scope.startTime.split(':');
         var endTimeParts = $scope.endTime.split(':');
         var start = new Date(dayParts[2], dayParts[1] - 1, dayParts[0], startTimeParts[1], startTimeParts[0]);
         var end = new Date(dayParts[2], dayParts[1] - 1, dayParts[0], endTimeParts[1], endTimeParts[0]);
-        // TODO generate id
         var event = {from: start, to: end, user_id: $scope.userid};
         EventService.create(event);
     };
+})
+.controller('UserCtrl', function($scope, UserService) {
+    $scope.save = function() {
+        UserService.create({firstname: $scope.firstname, lastname: $scope.lastname, twitter_id: $scope.twitterId});
+    }
 })
 .service('UserService', function($resource) {
     return $resource('/users/:id', {}, {

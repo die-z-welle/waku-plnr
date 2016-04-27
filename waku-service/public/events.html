@@ -7,8 +7,8 @@
         <link rel="stylesheet" href="/libs/bootstrap-clockpicker.css">
     </head>
    <body ng-app="wakuplnr">
-        <div class="container" ng-controller="MainCtrl">
-            <form novalidate name="eventForm" ng-submit="saveEvent()"> 
+        <div class="container" ng-controller="EventCtrl">
+            <form novalidate name="eventForm" ng-submit="save()"> 
                 <div style="margin-top: 50px;" class="row">
                     <div class="col-xs-4">
                         <div class="form-group" ng-class="{ 'has-error' : eventForm.user.$invalid && eventForm.$submitted }">
@@ -44,8 +44,8 @@
                 <br />
                 <div class="row">
                     <div class="col-xs-12">
-                        <button type="button" class="btn btn-default" ng-click="logme()">Log Date</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-default" ng-click="logme()">Console-Log</button>
+                        <button type="submit" class="btn btn-primary">Speichern</button>
                     </div>
                 </div>
             </form>

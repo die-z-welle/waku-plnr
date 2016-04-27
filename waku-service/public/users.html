@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Waku Planer</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    </head>
+   <body ng-app="wakuplnr">
+        <div class="container" ng-controller="UserCtrl">
+            <form novalidate name="userForm" ng-submit="save()"> 
+                <div style="margin-top: 50px;" class="row">
+                    <div class="col-xs-4">
+                        <div class="form-group" ng-class="{ 'has-error' : userForm.firstname.$invalid && eventForm.$submitted }">
+                            <label>Vorname</label>
+                            <input name="firstname" type="text" class="form-control" ng-model="firstname">
+                        </div>
+                    </div>
+                    <div class="col-offset-xs-2 col-xs-4">
+                        <div class="form-group" ng-class="{ 'has-error' : userForm.lastname.$invalid && eventForm.$submitted }">
+                            <label>Nachname</label>
+                            <input name="lastname" type="text" class="form-control" ng-model="lastname">
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="form-group" ng-class="{ 'has-error' : userForm.twitterId.$invalid && eventForm.$submitted }">
+                            <label>Twitter ID</label>
+                            <input name="twitterId" type="text" class="form-control" ng-model="twitterId">
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="submit" class="btn btn-primary">Speichern</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-resource.min.js"></script>
+        <script src="/wakuplnr-app.js"></script>
+   </body>
+</html>
