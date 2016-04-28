@@ -8,7 +8,7 @@ node_js:
 services:
  - docker
  
- docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 
 before_install:
 - docker pull carlad/sinatra
