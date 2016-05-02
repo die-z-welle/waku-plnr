@@ -41,14 +41,15 @@ var insertDummy = function() {
 router.get('/', function(req, res) {
     var startDate = req.query.startdate;
     var endDate = req.query.enddate;
-    console.log('requested all events');
     var result;
     if (startDate && endDate) {
+        console.log('requested events between ' + startDate + " and " + endDate);
         result = collection.find({
-            'from': {$gte: new Date(startDate)},
-            'to': {$lte: new Date(endDate)}
+            'from': {$gte: new Date(startDate).toISOString()},
+            'to': {$lte: new Date(endDate).toISOString()}
         });
     } else {
+        console.log('requested all events');
         result = collection.find();
     }
     result.toArray(function(err, items) {

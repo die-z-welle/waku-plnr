@@ -16,6 +16,7 @@ angular.module('wakuplnr', ['ngResource', 'ui.calendar'])
             height: 450,
             editable: true,
             defaultView: 'agendaWeek',
+            allDaySlot: false,
             header:{
                 left: 'month agendaWeek agendaDay',
                 center: 'title',
@@ -46,6 +47,7 @@ angular.module('wakuplnr', ['ngResource', 'ui.calendar'])
         var m = new Date(start).getMonth();
         var events = [];
         EventService.find({startdate: start, enddate: end}).$promise.then(function(result) {
+            console.log(JSON.stringify(result));
             result.forEach(function(event) {
                 var user = $scope.findUserById(event.user_id);
                 var userName = (user) ? (user.firstname + ' ' + user.lastname) : 'Namenlos';
@@ -74,8 +76,8 @@ angular.module('wakuplnr', ['ngResource', 'ui.calendar'])
         var dayParts = $scope.day.split('.');
         var startTimeParts = $scope.startTime.split(':');
         var endTimeParts = $scope.endTime.split(':');
-        var start = new Date(dayParts[2], dayParts[1] - 1, dayParts[0], startTimeParts[1], startTimeParts[0]);
-        var end = new Date(dayParts[2], dayParts[1] - 1, dayParts[0], endTimeParts[1], endTimeParts[0]);
+        var start = new Date(dayParts[2], dayParts[1] - 1, dayParts[0], startTimeParts[0], startTimeParts[1]);
+        var end = new Date(dayParts[2], dayParts[1] - 1, dayParts[0], endTimeParts[0], endTimeParts[1]);
         var event = {from: start, to: end, user_id: $scope.userid};
         EventService.create(event).$promise.then(
             function(success) {
