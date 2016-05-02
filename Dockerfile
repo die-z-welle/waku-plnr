@@ -11,4 +11,5 @@ RUN cd waku-plnr/waku-service
 RUN npm install
 RUN node waku-service.js &
 
+
 EXPOSE 3000
