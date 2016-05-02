@@ -45,8 +45,8 @@ router.get('/', function(req, res) {
     var result;
     if (startDate && endDate) {
         result = collection.find({
-            'from': {$gte: ISODate(startDate)},
-            'to': {$lte: ISODate(endDate)}
+            'from': {$gte: new Date(startDate)},
+            'to': {$lte: new Date(endDate)}
         });
     } else {
         result = collection.find();

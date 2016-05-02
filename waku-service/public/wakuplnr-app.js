@@ -1,7 +1,66 @@
-angular.module('wakuplnr', ['ngResource'])
-.controller('MainCtrl', function($scope, UserService, EventService) {
+angular.module('wakuplnr', ['ngResource', 'ui.calendar'])
+.controller('MainCtrl', function($scope, UserService, EventService, uiCalendarConfig) {
     $scope.users = UserService.find();
     $scope.events = EventService.find();
+    $scope.findUserById = function(userId) {
+        $scope.users.forEach(function(user) { 
+            if (user.id === userId) {
+                return user;
+            }
+        });
+        return null;
+    };
+
+    $scope.uiConfig = {
+        calendar:{
+            height: 450,
+            editable: true,
+            defaultView: 'agendaWeek',
+            header:{
+                left: 'month agendaWeek agendaDay',
+                center: 'title',
+                right: 'prev today next'
+            }
+            //,
+            // dayClick: $scope.alertEventOnClick,
+            // eventDrop: $scope.alertOnDrop,
+            // eventResize: $scope.alertOnResize
+        }
+    };
+
+    /* Change View */
+    $scope.changeView = function(view, calendar) {
+        uiCalendarConfig.calendars[calendar].fullCalendar('changeView', view);
+    };
+    
+    /* Change View */
+    $scope.renderCalender = function(calendar) {
+        if (uiCalendarConfig.calendars[calendar]) {
+            uiCalendarConfig.calendars[calendar].fullCalendar('render');
+        }
+    };
+        
+    $scope.eventsF = function (start, end, timezone, callback) {
+        var s = new Date(start).getTime() / 1000;
+        var e = new Date(end).getTime() / 1000;
+        var m = new Date(start).getMonth();
+        var events = [];
+        EventService.find({startdate: start, enddate: end}).$promise.then(function(result) {
+            result.forEach(function(event) {
+                var user = $scope.findUserById(event.user_id);
+                var userName = (user) ? (user.firstname + ' ' + user.lastname) : 'Namenlos';
+                events.push({
+                    title: userName,
+                    start: event.from,
+                    end: event.to,
+                    allDay: false
+                });
+            });
+            callback(events);
+        });
+    };
+
+    $scope.eventSources = [ $scope.eventsF ];
 })
 .controller('EventCtrl', function($scope, UserService, EventService) {
     $scope.users = UserService.find();
