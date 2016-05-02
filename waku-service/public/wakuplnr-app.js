@@ -3,12 +3,7 @@ angular.module('wakuplnr', ['ngResource', 'ui.calendar'])
     $scope.users = UserService.find();
     $scope.events = EventService.find();
     $scope.findUserById = function(userId) {
-        $scope.users.forEach(function(user) { 
-            if (user.id === userId) {
-                return user;
-            }
-        });
-        return null;
+        return $scope.users.find(function(user) { return userId === user._id; });
     };
 
     $scope.uiConfig = {
