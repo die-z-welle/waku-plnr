@@ -8,6 +8,12 @@
     </head>
    <body ng-app="wakuplnr">
         <div class="container" ng-controller="EventCtrl">
+            <ul class="nav nav-pills nav-justified">
+                <li role="presentation"><a href="/">Home</a></li>
+                <li role="presentation"><a href="/users.html">Mieter</a></li>
+                <li role="presentation" class="active"><a href="/events.html">Termine</a></li>
+            </ul>
+            <br /><br />
             <form novalidate name="eventForm" ng-submit="save()" ng-hide="success"> 
                 <div style="margin-top: 50px;" class="row">
                     <div class="col-xs-4">
