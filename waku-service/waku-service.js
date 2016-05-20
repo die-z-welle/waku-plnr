@@ -14,7 +14,7 @@ var mongoose = require('mongoose');
 /**
    MONGODB
 */
-mongoose.connect('mongodb://u5szijskfbfdohw:wzCVXvGYJKcxEr7oY9w2@bvbeo7drwwpvkaz-mongodb.services.clever-cloud.com:27017/bvbeo7drwwpvkaz');
+mongoose.connect('mongodb://uldpafyzr74maae:jqHqowrD7dQy5KhOUO7c@bk2fgwjtdrjk2r9-mongodb.services.clever-cloud.com:27017/bk2fgwjtdrjk2r9');
 
 /**
    MQTT
