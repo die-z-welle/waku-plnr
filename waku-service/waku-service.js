@@ -2,6 +2,7 @@ var config  = require('./config.json');
 var db      = require('./db.js');
 var users   = require('./user-controller.js');
 var events  = require('./event-controller.js');
+var devices = require('./device-controller.js');
 var express = require('express');
 var bodyParser = require('body-parser');
 var app     = express();
@@ -41,6 +42,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 app.use('/users', users);
 app.use('/events', events);
+app.use('/devices', devices);
 
 
 /**
