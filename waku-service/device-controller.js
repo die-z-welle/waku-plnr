@@ -20,4 +20,18 @@ router.post('/', function(req, res) {
    new Device(device).save();
 });
 
+router.put('/:id', function(req, res) {
+   Device.findOne({'_id': new BSON.ObjectID(id)}, function(err, device) {
+      if(!device)
+         return;
+      else {
+         if(req.body.state)
+            device.state = req.body.state;
+         if(req.body.location)
+            device.location = req.body.location;
+         device.save();
+      }
+   });
+});
+
 module.exports = router;
