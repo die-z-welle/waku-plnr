@@ -2,7 +2,6 @@ var config  = require('./config.json');
 var db      = require('./db.js');
 var users   = require('./user-controller.js');
 var events  = require('./event-controller.js');
-var measurements = require('./measurement-controller.js')
 var express = require('express');
 var bodyParser = require('body-parser');
 var app     = express();
@@ -10,7 +9,16 @@ var http    = require('http').Server(app);
 var io      = require('socket.io')(http);
 var mqtt    = require('mqtt');
 var client  = mqtt.connect(config.brokerURI);
+var mongoose = require('mongoose');
 
+/**
+   MONGODB
+*/
+mongoose.connect('mongodb://u5szijskfbfdohw:wzCVXvGYJKcxEr7oY9w2@bvbeo7drwwpvkaz-mongodb.services.clever-cloud.com:27017/bvbeo7drwwpvkaz');
+
+/**
+   MQTT
+*/
 client.on('connect', function() {
    client.subscribe(config.topic);
 });
@@ -25,11 +33,19 @@ client.on('message', function(topic, message) {
    io.emit('notifications', JSON.stringify(json));
 });
 
+/**
+   EXPRESS
+*/
+
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 app.use('/users', users);
 app.use('/events', events);
-app.use('/measurements', measurements);
+
+
+/**
+   SOCKET.IO
+*/
 
 io.on('connection', function(socket) {
    console.log('[ INFO ] Client connected');
