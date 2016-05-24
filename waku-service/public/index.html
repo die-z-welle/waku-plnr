@@ -6,7 +6,7 @@
       <link rel="stylesheet" href="/libs/fullcalendar/fullcalendar.css">
    </head>
    <body ng-app="wakuplnr">
-      <ul id="waku"></ul>
+      
       <div class="container" ng-controller="MainCtrl">
           <ul class="nav nav-pills nav-justified">
             <li role="presentation" class="active"><a href="/">Home</a></li>
@@ -33,6 +33,20 @@
               </tbody>
           </table>
 
+         <table class="table table-striped">
+            <thead>
+               <tr>
+                  <th>ID</th>
+                  <th>Location</th>
+                  <th>State</th>
+               </tr>
+            </thead>
+            <tbody id="waku">
+               
+            </tbody>
+
+         </table>
+
           <!--
           <div class="row" ng-repeat="event in events">
               <div class="col-xs-12">
@@ -50,15 +64,15 @@
          socket.on('devices', function(msg) {
             var json = JSON.parse(msg);
             console.log('new device: ' + json.toString());
-            $('#waku').append($('<li>')
-               .attr('id', json.id)
-               .text('id: ' + json.id + ', state: ' + json.state));
+            $('#waku').append($('<tr>')
+               .attr('id', json._id)
+               .html('<td>' + json._id + '</td><td>' + json.location + '</td><td>' + json.state + '</td>'));
          });
 
          socket.on('notifications', function(msg) {
             var json = JSON.parse(msg);
-            console.log('notification: ' + json.id);
-            $('#' + json.id).text('id: ' + json.id + ', state: ' + json.state);
+            console.log('notification: ' + json._id);
+            $('#' + json._id).html('<td>' + json._id + '</td><td>' + json.location + '</td><td>' + json.state + '</td>');
          });
       </script>
       

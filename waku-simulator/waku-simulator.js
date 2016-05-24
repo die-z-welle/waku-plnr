@@ -9,7 +9,8 @@ config.washingTimeInMillis = hoursToMillis(config.washingTimeInHours);
 pool.all.eval('washingmachines', function(err, data) {
    
    var info = { 
-      id : this.id,
+      _id : this.id,
+      location: '',
       state : 'idle'
    }
    
