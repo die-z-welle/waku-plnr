@@ -14,6 +14,10 @@ var mongoose = require('mongoose');
 var Device = require('./device-model.js');
 var BSON = require('bson');
 
+var Twit = require('twit')
+var credentials = require('../../credentials.json');
+var T = new Twit(credentials);
+
 /**
    MONGODB
 */
@@ -26,6 +30,15 @@ mongoose.connect('mongodb://localhost');
 client.on('connect', function() {
    client.subscribe(config.topic);
 });
+
+function tweet(screenname, state) {
+  var template = (state === 'washing') ? config.messages.started : config.messages.finished;
+  var account = (screenname.startsWith('@')) ? screenname.substring(1) : screenname;
+  var message = messageTemplate.replace(config.messages.placeholder, account);
+  T.post('direct_messages/new', { screen_name: account, text: message}, function(err, data, response) {
+    console.log('sent twitter message');
+  });
+};
 
 client.on('message', function(topic, message) {
    var device = JSON.parse(message);
@@ -40,6 +53,9 @@ client.on('message', function(topic, message) {
          item.state = device.state;
          item.save();
          io.emit('notifications', JSON.stringify(item));
+
+         // TODO find current user and send tweet
+//         tweet('aqulu1', device.state);
          console.log('device state changed');
       } else {
          console.log('error finding device');

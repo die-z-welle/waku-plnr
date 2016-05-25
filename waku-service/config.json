@@ -1,5 +1,10 @@
 {
    "brokerURI" : "mqtt://localhost",
    "topic" : "waku",
-   "port" : "3000"
+   "port" : "3000",
+   "messages": {
+     "placeholder": "{name}",
+     "finished": "Guten Tag {name}. Ihre Wäsche ist fertig!",
+     "started": "Guten Tag {name}. Ihre Wäsche hat soeben begonnen."
+   }
 }
