@@ -17,8 +17,8 @@ var BSON = require('bson');
 /**
    MONGODB
 */
-
-mongoose.connect('mongodb://uldpafyzr74maae:jqHqowrD7dQy5KhOUO7c@bk2fgwjtdrjk2r9-mongodb.services.clever-cloud.com:27017/bk2fgwjtdrjk2r9');
+//mongoose.connect('mongodb://uldpafyzr74maae:jqHqowrD7dQy5KhOUO7c@bk2fgwjtdrjk2r9-mongodb.services.clever-cloud.com:27017/bk2fgwjtdrjk2r9');
+mongoose.connect('mongodb://localhost');
 
 /**
    MQTT
@@ -29,6 +29,7 @@ client.on('connect', function() {
 
 client.on('message', function(topic, message) {
    var device = JSON.parse(message);
+   console.log(message);
    Device.findOne({'_id': device._id}, function(err, item) {
       if(!err) {
          if(!item) {

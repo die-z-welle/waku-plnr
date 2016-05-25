@@ -36,6 +36,7 @@ router.post('/', function(req, res) {
     var event = req.body;
     event._id = null;
     new Event(event).save();
+    res.send(event);
 });
 
 /*

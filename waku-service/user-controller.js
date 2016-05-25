@@ -22,6 +22,7 @@ router.post('/', function(req, res) {
     console.log(JSON.stringify(item));
     item._id = null;
     new User(item).save();
+    res.send(item);
 });
 
 module.exports = router;
