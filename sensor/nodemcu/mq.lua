@@ -1,4 +1,5 @@
-id = node.chipid()
+-- DO NOT USE node.chipid()! bricks nodemcu!!!
+id = 1
 
 -- mqtt config
 ip = "192.168.11.118"
@@ -7,7 +8,7 @@ secure = 0
 topic = "/waku"
 
 -- gpio config
-pin = 3  -- D0
+pin = 1  -- D1
 
 createJson = function(status)
   return ('{"id": "' .. id .. '", "status": "'.. status .. '"}')
@@ -30,35 +31,20 @@ m:connect(ip, port, secure, function(client) print("connected") end,
                             function(client, reason) print("failed reason: " .. reason) end)
 m:subscribe(topic, 0, function(client) print("subscribe success") end)
 
-
-function led(r,g,b)
-    pwm.setduty(1,r)
-    pwm.setduty(2,g)
-    pwm.setduty(3,b)
-end
-pwm.setup(1,500,512)
-pwm.setup(2,500,512)
-pwm.setup(3,500,512)
-pwm.start(1)
-pwm.start(2)
-pwm.start(3)
-
 gpio.mode(pin, gpio.INPUT)
 oldVal = 0
---automatically repeat alarm every 5000ms
-tmr.register(0, 5000, tmr.ALARM_AUTO, function()
-  val = gpio.read(pin)
-  if (val != oldVal) {
-    message = createJson((val == 1) ? "on" : "off" )
-    m:publish(topic, message, 0, 0, function(client) print("sent status") end)
-  end
-  if (val == 1)
-    led(512,512,512)
-  else
-    led(0,0,0)
+--automatically repeat alarm every 2000ms
+tmr.alarm(1, 2000,1,function()
+  newVal = gpio.read(pin)
+  if (newVal ~= oldVal) then
+    if (newVal == 1) then
+      status = "on"
+    else
+      status = "off"
+    end
+    m:publish(topic, createJson(status), 0, 0, function(client) print("sent status") end)
   end
   oldVal = val
 end)
-tmr.start(0)
 -- m:close();
 -- you can call m:connect again
