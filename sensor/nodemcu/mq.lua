@@ -10,8 +10,8 @@ topic = "/waku"
 -- gpio config
 pin = 1  -- D1
 
-createJson = function(status)
-  return ('{"_id": "' .. id .. '", "location": "", "status": "'.. status .. '"}')
+createJson = function(state)
+  return ('{"_id": "' .. id .. '", "location": "", "state": "'.. state .. '"}')
 end
 
 wifi.setmode(wifi.STATION)
@@ -35,11 +35,11 @@ tmr.alarm(1, 2000,1,function()
   newVal = gpio.read(pin)
   if (newVal ~= oldVal) then
     if (newVal == 1) then
-      status = "washing"
+      state = "washing"
     else
-      status = "idle"
+      state = "idle"
     end
-    m:publish(topic, createJson(status), 0, 0, function(client) print("sent status") end)
+    m:publish(topic, createJson(state), 0, 0, function(client) print("sent state") end)
   end
   oldVal = newVal
 end)
