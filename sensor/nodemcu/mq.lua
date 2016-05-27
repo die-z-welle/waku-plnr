@@ -2,10 +2,10 @@
 id = 1
 
 -- mqtt config
-ip = "152.96.239.126"
+ip = "test.mosquitto.org"
 port = 1883
 secure = 0
-topic = "/waku"
+topic = "waku"
 
 -- gpio config
 pin = 1  -- D1
