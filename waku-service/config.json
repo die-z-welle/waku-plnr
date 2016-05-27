@@ -1,5 +1,5 @@
 {
-   "brokerURI" : "mqtt://localhost",
+   "brokerURI" : "mqtt://test.mosquitto.org",
    "topic" : "waku",
    "port" : "3000",
    "messages": {

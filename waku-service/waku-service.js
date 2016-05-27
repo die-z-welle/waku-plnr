@@ -27,22 +27,23 @@ mongoose.connect('mongodb://localhost');
 /**
    MQTT
 */
+
 client.on('connect', function() {
-   client.subscribe(config.topic);
+  client.subscribe(config.topic);
 });
 
 function tweet(screenname, state) {
   var template = (state === 'washing') ? config.messages.started : config.messages.finished;
-  var account = (screenname.startsWith('@')) ? screenname.substring(1) : screenname;
-  var message = messageTemplate.replace(config.messages.placeholder, account);
+  var account = (screenname.indexOf('@') === 0) ? screenname.substring(1) : screenname;
+  var message = template.replace(config.messages.placeholder, account);
   T.post('direct_messages/new', { screen_name: account, text: message}, function(err, data, response) {
     console.log('sent twitter message');
   });
 };
 
 client.on('message', function(topic, message) {
-   var device = JSON.parse(message);
    console.log(message);
+   var device = JSON.parse(message);
    Device.findOne({'_id': device._id}, function(err, item) {
       if(!err) {
          if(!item) {
@@ -55,23 +56,12 @@ client.on('message', function(topic, message) {
          io.emit('notifications', JSON.stringify(item));
 
          // TODO find current user and send tweet
-//         tweet('aqulu1', device.state);
+         tweet('@aqulu1', device.state);
          console.log('device state changed');
       } else {
          console.log('error finding device');
       }
    });
-
-
-   /*
-   var json = JSON.parse(message);
-   if(find(json.id) == null) {
-      console.log('[ INFO ] New device: ' + json.id)
-      io.emit('devices', JSON.stringify(json));
-   }
-   save(json);
-   io.emit('notifications', JSON.stringify(json));
-   */
 });
 
 /**
@@ -88,7 +78,6 @@ app.use('/devices', devices);
 /**
    SOCKET.IO
 */
-
 io.on('connection', function(socket) {
    console.log('[ INFO ] Client connected');
    Device.find(function(err, devices) {
