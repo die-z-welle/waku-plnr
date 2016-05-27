@@ -27,7 +27,7 @@ router.get('/', function(req, res) {
 router.get('/:id', function(req, res) {
     var id = req.params.id;
     console.log('requested event ' + id);
-    Event.findOne({'_id': new BSON.ObjectID(id)}, function(err, item) {
+    Event.findById(ObjectId(id)).exec(function(err, item) {
         res.send(item);
     });
 });

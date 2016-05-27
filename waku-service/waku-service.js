@@ -13,6 +13,9 @@ var client  = mqtt.connect(config.brokerURI);
 var mongoose = require('mongoose');
 var Device = require('./device-model.js');
 var BSON = require('bson');
+var Event = require('./event-model.js');
+var User = require('./user-model.js');
+var ObjectId = mongoose.Types.ObjectId;
 
 var Twit = require('twit')
 var credentials = require('../../credentials.json');
@@ -27,18 +30,51 @@ mongoose.connect('mongodb://localhost');
 /**
    MQTT
 */
-
 client.on('connect', function() {
   client.subscribe(config.topic);
 });
 
 function tweet(screenname, state) {
-  var template = (state === 'washing') ? config.messages.started : config.messages.finished;
-  var account = (screenname.indexOf('@') === 0) ? screenname.substring(1) : screenname;
-  var message = template.replace(config.messages.placeholder, account);
-  T.post('direct_messages/new', { screen_name: account, text: message}, function(err, data, response) {
-    console.log('sent twitter message');
-  });
+  if (screenname) {
+    var template = (state === 'washing') ? config.messages.started : config.messages.finished;
+    var account = (screenname.indexOf('@') === 0) ? screenname.substring(1) : screenname;
+    var message = template.replace(config.messages.placeholder, account);
+    T.post('direct_messages/new', { screen_name: account, text: message}, function(err, data, response) {
+      console.log('sent twitter message');
+    });
+  } else {
+    console.log('no twitter account specified');
+  }
+};
+
+function notify(event, state) {
+  if (event) {
+    User.findById(ObjectId(event.user_id)).exec(function(err, user) {
+      if (user) {
+        tweet(user.twitter_id, state);
+      }
+    });
+  }
+};
+
+function notifyStartedEvent(state) {
+  var startTime = new Date();
+  startTime.setHours(startTime.getHours() + 2);
+  Event.find({'from': {'$lte': startTime.toISOString()}})
+    .sort({'from': -1})
+    .exec(function(err, events) {
+      notify(events[0], state);
+    });
+};
+
+function notifyFinishedEvent(state) {
+  var startTime = new Date();
+  startTime.setHours(startTime.getHours() + 2);
+  Event.find({'to': {'$lte': startTime.toISOString()}})
+    .sort({'to': -1})
+    .exec(function(err, events) {
+      notify(events[0], state);
+    });
 };
 
 client.on('message', function(topic, message) {
@@ -55,11 +91,13 @@ client.on('message', function(topic, message) {
          item.save();
          io.emit('notifications', JSON.stringify(item));
 
-         // TODO find current user and send tweet
-         tweet('@aqulu1', device.state);
-         console.log('device state changed');
+         if (device.state === 'washing') {
+           notifyStartedEvent(device.state);
+         } else {
+           notifyFinishedEvent(device.state);
+         }
       } else {
-         console.log('error finding device');
+        console.log('error finding device');
       }
    });
 });
@@ -67,7 +105,6 @@ client.on('message', function(topic, message) {
 /**
    EXPRESS
 */
-
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 app.use('/users', users);
@@ -87,11 +124,6 @@ io.on('connection', function(socket) {
          socket.emit('devices', JSON.stringify(data));
       });
    });
-   /*
-   iterate(function(data) {
-      socket.emit('devices', JSON.stringify(data));
-   });
-   */
    socket.on('disconnect', function() {
       console.log('[ INFO ] Client disconnected');
    });

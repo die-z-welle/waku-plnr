@@ -3,7 +3,6 @@ var mongoose = require('mongoose'),
    ObjectId = Schema.ObjectId;
 
 var EventSchema = new Schema({
-   _id: String,
    from: Date,
    to: Date,
    user_id: ObjectId
