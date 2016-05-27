@@ -28,14 +28,14 @@ angular.module('wakuplnr', ['ngResource', 'ui.calendar'])
     $scope.changeView = function(view, calendar) {
         uiCalendarConfig.calendars[calendar].fullCalendar('changeView', view);
     };
-    
+
     /* Change View */
     $scope.renderCalender = function(calendar) {
         if (uiCalendarConfig.calendars[calendar]) {
             uiCalendarConfig.calendars[calendar].fullCalendar('render');
         }
     };
-        
+
     $scope.eventsF = function (start, end, timezone, callback) {
         var s = new Date(start).getTime() / 1000;
         var e = new Date(end).getTime() / 1000;
@@ -66,13 +66,13 @@ angular.module('wakuplnr', ['ngResource', 'ui.calendar'])
         console.log($scope.day);
         console.log($scope.startTime + ' - ' + $scope.endTime);
     };
-    
+
     $scope.save = function() {
         var dayParts = $scope.day.split('.');
         var startTimeParts = $scope.startTime.split(':');
         var endTimeParts = $scope.endTime.split(':');
-        var start = new Date(dayParts[2], dayParts[1] - 1, dayParts[0], startTimeParts[0], startTimeParts[1]);
-        var end = new Date(dayParts[2], dayParts[1] - 1, dayParts[0], endTimeParts[0], endTimeParts[1]);
+        var start = new Date(dayParts[2], dayParts[1] - 1, dayParts[0], parseInt(startTimeParts[0]) + 2, startTimeParts[1]);
+        var end = new Date(dayParts[2], dayParts[1] - 1, dayParts[0], parseInt(endTimeParts[0]) + 2, endTimeParts[1]);
         var event = {from: start, to: end, user_id: $scope.userid};
         EventService.create(event).$promise.then(
             function(success) {
